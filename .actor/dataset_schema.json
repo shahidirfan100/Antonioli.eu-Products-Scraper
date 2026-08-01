@@ -1,0 +1,67 @@
+{
+    "actorSpecification": 1,
+    "views": {
+        "overview": {
+            "title": "Products",
+            "transformation": {
+                "fields": [
+                    "id",
+                    "title",
+                    "vendor",
+                    "product_type",
+                    "price_min",
+                    "price_max",
+                    "available",
+                    "url",
+                    "source_type",
+                    "scraped_at"
+                ]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "id": {
+                        "label": "ID",
+                        "format": "number"
+                    },
+                    "title": {
+                        "label": "Title",
+                        "format": "text"
+                    },
+                    "vendor": {
+                        "label": "Brand",
+                        "format": "text"
+                    },
+                    "product_type": {
+                        "label": "Type",
+                        "format": "text"
+                    },
+                    "price_min": {
+                        "label": "Min price",
+                        "format": "number"
+                    },
+                    "price_max": {
+                        "label": "Max price",
+                        "format": "number"
+                    },
+                    "available": {
+                        "label": "Available",
+                        "format": "boolean"
+                    },
+                    "url": {
+                        "label": "URL",
+                        "format": "link"
+                    },
+                    "source_type": {
+                        "label": "Source",
+                        "format": "text"
+                    },
+                    "scraped_at": {
+                        "label": "Scraped at",
+                        "format": "text"
+                    }
+                }
+            }
+        }
+    }
+}

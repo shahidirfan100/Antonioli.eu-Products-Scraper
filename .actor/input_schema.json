@@ -1,0 +1,51 @@
+{
+    "title": "Antonioli.eu Products Scraper",
+    "description": "Collect structured product data from Antonioli.eu using one product, collection, catalog, or search URL, or use a keyword when no URL is supplied. If both URL and keyword are supplied, URL takes priority.",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "url": {
+            "title": "URL",
+            "type": "string",
+            "description": "A public Antonioli.eu product, collection, catalog, or search URL. Leave empty to use keyword mode.",
+            "editor": "textfield",
+            "prefill": "https://antonioli.eu/en-row/collections/man"
+        },
+        "keyword": {
+            "title": "Keyword",
+            "type": "string",
+            "description": "Product keyword such as Gucci, sneakers, or leather bag. Use this when URL is empty.",
+            "editor": "textfield"
+        },
+        "results_wanted": {
+            "title": "Results wanted",
+            "type": "integer",
+            "description": "Maximum number of unique products to save.",
+            "minimum": 1,
+            "default": 20,
+            "prefill": 20,
+            "editor": "number"
+        },
+        "max_pages": {
+            "title": "Maximum pages",
+            "type": "integer",
+            "description": "Maximum collection or catalog pages to request. Product URLs use one request.",
+            "minimum": 1,
+            "default": 3,
+            "prefill": 3,
+            "editor": "number"
+        },
+        "proxyConfiguration": {
+            "title": "Proxy configuration",
+            "type": "object",
+            "description": "Optional Apify Proxy settings for production runs.",
+            "editor": "proxy",
+            "default": {
+                "useApifyProxy": true,
+                "apifyProxyGroups": ["RESIDENTIAL"]
+            }
+        }
+    },
+    "required": [],
+    "additionalProperties": false
+}
