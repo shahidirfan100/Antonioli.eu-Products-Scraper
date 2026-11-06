@@ -1,87 +1,97 @@
 ## What does Antonioli.eu Products Scraper do?
 
-Antonioli.eu Products Scraper collects structured fashion product data from Antonioli.eu. Enter one public product, collection, catalog, or search URL, or use a keyword without a URL. The dataset includes product names, brands, categories, prices, availability, descriptions, images, variants, tags, and canonical product links for research, price monitoring, catalog analysis, and product discovery.
+Antonioli.eu Products Scraper collects structured fashion product data from Antonioli.eu. Enter a public Antonioli.eu product, collection, catalog, or search URL, or leave the URL empty and use a keyword. The dataset includes product names, brands, categories, prices, availability, descriptions, images, variants, tags, and product links for catalog research, price monitoring, and product discovery.
 
 ## Why use Antonioli.eu Products Scraper?
 
-- **Product catalog collection** - Gather current Antonioli.eu products from men’s, women’s, sale, brand, category, and other collection pages.
-- **Keyword discovery** - Search for brands, garment types, materials, and other product terms when a specific page is not available.
-- **Rich product records** - Keep pricing, descriptions, variants, images, tags, availability, and source metadata in the dataset.
-- **URL flexibility** - Run the same Actor on a collection URL, a single product URL, a search URL, or a catalog URL.
-- **Automation-ready output** - Export the dataset as JSON, CSV, Excel, XML, or connect it to downstream workflows with Apify integrations.
-- **Repeatable monitoring** - Schedule runs to track new arrivals, product availability, price changes, or catalog updates.
+- Collect men's, women's, sale, brand, category, and new-arrival products from one Actor.
+- Search by brand or product term when you do not have a collection URL.
+- Read one product, a full collection, or a keyword result set in the same dataset shape.
+- Keep price, compare-at price, variant, image, tag, and availability data for each item.
+- Schedule repeat runs to watch new arrivals, price changes, and stock updates.
+- Export results as JSON, CSV, Excel, XML, or send them to another tool through Apify.
 
 ## What data can you extract from Antonioli.eu?
 
-| Field                             | Description                                                       |
-| --------------------------------- | ----------------------------------------------------------------- |
-| `id`                              | Antonioli product identifier                                      |
-| `title`                           | Product name                                                      |
-| `handle`                          | Product handle used in the source URL                             |
-| `url`                             | Canonical product URL                                             |
-| `vendor`                          | Brand or vendor                                                   |
-| `product_type`                    | Product category or type                                          |
-| `price`, `price_min`, `price_max` | Current product or variant pricing when available                 |
-| `compare_at_price`                | Original or comparison price when available                       |
-| `available`                       | Product availability status                                       |
-| `body_html`                       | Product description                                               |
-| `tags`                            | Product tags, gender, category, color, season, and related labels |
-| `image`                           | Primary product image URL                                         |
-| `featured_image`                  | Featured product image URL                                        |
-| `images`                          | Deduplicated product image URLs without image metadata            |
-| `variants`                        | Size, SKU, price, inventory, and other variant records            |
-| `source_url`                      | URL or source used for the run                                    |
-| `source_type`                     | `product`, `collection`, `catalog`, `search`, or `keyword`        |
-| `search_keyword`                  | Keyword used for a keyword or search run                          |
-| `scraped_at`                      | ISO timestamp for the saved record                                |
+| Field                                                              | Description                                                |
+| ------------------------------------------------------------------ | ---------------------------------------------------------- |
+| `id`                                                               | Antonioli product identifier                               |
+| `title`                                                            | Product name                                               |
+| `handle`                                                           | Product handle used in the Antonioli URL                   |
+| `url`                                                              | Canonical product page                                     |
+| `vendor`                                                           | Brand name                                                 |
+| `product_type`                                                     | Product category, such as sneakers or knitwear             |
+| `price`, `price_min`, `price_max`                                  | Current price or price range                               |
+| `compare_at_price`, `compare_at_price_min`, `compare_at_price_max` | Compare-at price when published                            |
+| `available`                                                        | Product availability                                       |
+| `body_html`                                                        | Product description                                        |
+| `tags`                                                             | Brand, gender, category, color, season, and supplier tags  |
+| `image`                                                            | Primary image URL                                          |
+| `featured_image`                                                   | Featured image URL                                         |
+| `images`                                                           | Product image URLs                                         |
+| `options`                                                          | Size or color options                                      |
+| `variants`                                                         | Size, SKU, price, and availability records                 |
+| `source_url`                                                       | URL or source used for the run                             |
+| `source_type`                                                      | `product`, `collection`, `catalog`, `search`, or `keyword` |
+| `search_keyword`                                                   | Keyword used for a keyword or search run                   |
+| `scraped_at`                                                       | Time the record was saved                                  |
 
-Null, undefined, blank, and empty nested values are omitted from saved records so the dataset stays easy to use.
+Blank, null, and empty nested values are left out of each record. Product fields vary by brand and item, so a missing optional field does not mean the run failed.
 
 ## How to use Antonioli.eu Products Scraper
 
 1. Open the Actor in Apify Console.
-2. Provide either `url` or `keyword`.
-3. Set `results_wanted` and `max_pages` for the size of the run.
+2. Paste a product, collection, catalog, or search URL, or enter a keyword.
+3. Set `results_wanted` and `max_pages`.
 4. Run the Actor and open the dataset preview.
-5. Download the results or connect the dataset to your workflow.
+5. Download the dataset or connect it to your workflow.
 
-If both `url` and `keyword` are supplied, the URL takes priority. For keyword mode, leave `url` empty.
+A supplied URL takes priority over the keyword. The keyword field has a `Gucci` default so the Actor can run from the Console or Store test without extra input. Clear the URL field to use keyword mode.
 
 ## Input Parameters
 
-| Parameter            | Type    | Required | Default                                          | Description                                                            |
-| -------------------- | ------- | -------- | ------------------------------------------------ | ---------------------------------------------------------------------- |
-| `url`                | String  | No       | Antonioli men’s collection URL in the QA prefill | Public Antonioli.eu product, collection, catalog, or search URL        |
-| `keyword`            | String  | No       | -                                                | Product, brand, category, or material keyword used when `url` is empty |
-| `results_wanted`     | Integer | No       | `20`                                             | Maximum number of unique products to save                              |
-| `max_pages`          | Integer | No       | `3`                                              | Maximum collection or catalog pages to request                         |
-| `proxyConfiguration` | Object  | No       | Apify Proxy enabled                              | Optional Apify Proxy configuration                                     |
+| Parameter            | Type    | Required | Default                        | Description                                                     |
+| -------------------- | ------- | -------- | ------------------------------ | --------------------------------------------------------------- |
+| `url`                | String  | No       | -                              | Public Antonioli.eu product, collection, catalog, or search URL |
+| `keyword`            | String  | No       | `Gucci`                        | Brand or product term used when `url` is empty                  |
+| `results_wanted`     | Integer | No       | `20`                           | Maximum number of unique products to save                       |
+| `max_pages`          | Integer | No       | `3`                            | Maximum result pages to request                                 |
+| `proxyConfiguration` | Object  | No       | Apify Residential Proxy, Italy | Optional proxy settings for cloud runs                          |
 
-At least one of `url` or `keyword` should be provided. The schema leaves both fields optional so the Actor can support either workflow.
+At least one search mode must be usable. If both `url` and `keyword` are present, the URL is used.
+
+Apify Proxy defaults to Italian residential IPs for this Actor. Other residential locations and custom proxies are supported. Blocked proxy sessions rotate automatically on retries.
 
 ## Output Data
 
-Each dataset item represents one Antonioli.eu product. Keyword results are completed with available product details, so the initial search matches and later catalog matches use the same practical output shape.
+| Field                                                              | Type             | Description                                       |
+| ------------------------------------------------------------------ | ---------------- | ------------------------------------------------- |
+| `id`                                                               | Number           | Antonioli product identifier                      |
+| `title`                                                            | String           | Product name                                      |
+| `handle`                                                           | String           | Product handle                                    |
+| `url`                                                              | String           | Canonical product page                            |
+| `vendor`                                                           | String           | Brand                                             |
+| `product_type`                                                     | String           | Product category                                  |
+| `price`, `price_min`, `price_max`                                  | Number           | Current price data                                |
+| `compare_at_price`, `compare_at_price_min`, `compare_at_price_max` | Number           | Compare-at price data                             |
+| `available`                                                        | Boolean          | Product availability                              |
+| `body_html`                                                        | String           | Product description with HTML line breaks         |
+| `tags`                                                             | Array of strings | Product tags                                      |
+| `image`, `featured_image`                                          | String           | Image URLs                                        |
+| `images`                                                           | Array of strings | Product image URLs                                |
+| `options`                                                          | Array            | Size or color option definitions                  |
+| `variants`                                                         | Array            | Variant records with SKU, price, and availability |
+| `source_url`, `source_type`                                        | String           | Run source and source mode                        |
+| `search_keyword`                                                   | String           | Keyword for a keyword or search run               |
+| `scraped_at`                                                       | String           | ISO timestamp for the saved record                |
 
-| Field                                                              | Type             | Description                                                           |
-| ------------------------------------------------------------------ | ---------------- | --------------------------------------------------------------------- |
-| `price`, `price_min`, `price_max`                                  | Number           | Current product price summary derived from the available product data |
-| `compare_at_price`, `compare_at_price_min`, `compare_at_price_max` | Number           | Comparison price summary when published                               |
-| `available`                                                        | Boolean          | Product availability when published by Antonioli.eu                   |
-| `image`                                                            | String           | Primary image URL                                                     |
-| `featured_image`                                                   | String           | Featured image URL                                                    |
-| `images`                                                           | Array of strings | Deduplicated image URLs only, with no image metadata objects          |
-| `variants`                                                         | Array            | Available size, SKU, price, and inventory-related variant data        |
-| `options`                                                          | Array            | Product option definitions, such as size or color                     |
-| `source_url`, `source_type`                                        | String           | Input source and collection mode that produced the record             |
-
-Some optional values depend on what Antonioli.eu publishes for an individual product. Empty, null, and blank values are not included in the dataset.
+Prices use the storefront currency, currently EUR.
 
 ## Usage Examples
 
 ### Collection URL
 
-Collect products from the men’s collection:
+Collect products from the men's collection:
 
 ```json
 {
@@ -93,18 +103,18 @@ Collect products from the men’s collection:
 
 ### Product URL
 
-Collect a single product record with its available product details:
+Collect one product with its variants and images:
 
 ```json
 {
-    "url": "https://antonioli.eu/en-row/products/woman-gucci-bags-tote-bags-874745faf79-8547",
+    "url": "https://antonioli.eu/en-row/products/man-asics-shoes-sneakers-1203b116-200",
     "results_wanted": 1
 }
 ```
 
 ### Keyword search
 
-Search the catalog for products matching a brand or product term. Leave `url` empty in the Apify input form:
+Search for a brand when you do not have a collection URL:
 
 ```json
 {
@@ -116,7 +126,7 @@ Search the catalog for products matching a brand or product term. Leave `url` em
 
 ### Search URL
 
-Use a search URL when the source page already contains the desired query:
+Use a search page that already contains the query:
 
 ```json
 {
@@ -130,87 +140,97 @@ Use a search URL when the source page already contains the desired query:
 
 ```json
 {
-    "id": 10799588540758,
-    "title": "Gucci Tribeca Large Tote Bag",
-    "handle": "woman-gucci-bags-tote-bags-874745faf79-8547",
-    "url": "https://antonioli.eu/en-row/products/woman-gucci-bags-tote-bags-874745faf79-8547",
+    "id": 7589899108530,
+    "title": "1953 Horsebit loafers",
+    "handle": "man-gucci-shoes-loafers-flats-307929blm00-1000",
+    "url": "https://antonioli.eu/en-row/products/man-gucci-shoes-loafers-flats-307929blm00-1000",
     "vendor": "GUCCI",
-    "product_type": "TOTE BAGS",
-    "price": 1520,
-    "price_min": 1520,
-    "price_max": 1520,
+    "product_type": "LOAFERS & FLATS",
+    "price_min": 775,
+    "price_max": 775,
     "available": true,
-    "body_html": "Product description supplied by Antonioli.",
-    "tags": ["filter-brand_GUCCI", "filter-gender_woman"],
+    "body_html": "black<br>smooth leather<br>front gold-metal horsebit<br>block heel<br>leather sole",
+    "tags": ["filter-brand_GUCCI", "filter-gender_man", "dept_SHOES"],
     "variants": [
         {
-            "title": "UNI",
-            "sku": "2000012391767",
-            "price": "1520.00",
+            "title": "6 UK M",
+            "sku": "2000009441666",
+            "price": "775.0",
             "available": true
         }
     ],
-    "source_type": "product",
-    "scraped_at": "2026-08-01T15:20:00.000Z"
+    "source_type": "search",
+    "search_keyword": "Gucci",
+    "scraped_at": "2026-11-06T12:13:15.182Z"
 }
 ```
 
 ## Tips for Best Results
 
 - Use a complete public URL copied from Antonioli.eu.
-- Start with `results_wanted: 20` when testing a new category or filter.
-- Use a collection URL for broad catalog collection and a product URL for one detailed item.
-- Use a short keyword such as `Gucci`, `sneakers`, or `leather jacket` for catalog discovery.
-- Increase `max_pages` when a collection has more products than the first page.
-- Check several records before treating a missing field as a problem. Product data varies by brand and item.
-- Use schedules and dataset exports for recurring price or availability monitoring.
+- Start with 20 results to check the dataset shape before a larger run.
+- Use a collection URL for broad catalog collection and a product URL for one item.
+- Use a short keyword such as a brand or garment type for discovery.
+- Keep the default Italian residential proxy for the lowest retry rate. Other residential proxies also work, with automatic session rotation.
+- Raise `max_pages` when a collection has more products than the first page.
+- Check several records before treating a missing field as a problem.
+- Schedule repeat runs for price and availability monitoring.
 
 ## Integrations
 
-- **Apify API** - Read the dataset from your application or data pipeline.
-- **Google Sheets** - Send product records for merchandising and price analysis.
-- **Webhooks** - Trigger downstream processing after a run finishes.
-- **Make or Zapier** - Connect product records to no-code workflows.
-- **CSV, Excel, JSON, and XML** - Export data for analysis, storage, or import into another system.
+- **Apify API** - Read the dataset from your own application.
+- **Google Sheets** - Send product records to a spreadsheet.
+- **Webhooks** - Start a downstream job after a run finishes.
+- **Make or Zapier** - Connect records to a no-code workflow.
+- **CSV, Excel, JSON, and XML** - Export the dataset for analysis or storage.
 
 ## Frequently Asked Questions
 
-### Can I collect a single Antonioli product?
+### Can I collect one Antonioli product?
 
-Yes. Provide the public product URL and set `results_wanted` to `1`.
+Yes. Paste the product URL and set `results_wanted` to `1`.
 
-### Can I use a collection URL other than the men’s collection?
+### Can I collect a collection other than the men's collection?
 
-Yes. Public Antonioli.eu collection, category, brand, sale, and new-arrival URLs are supported when they use the site’s collection structure.
+Yes. Public Antonioli.eu collection, brand, category, sale, and new-arrival URLs are supported when they use the site's collection path.
 
 ### How does keyword mode work?
 
-Keyword mode first uses Antonioli.eu search results and then checks paginated catalog data to fill the requested result limit when matching products are available.
+Keyword mode searches Antonioli.eu for the supplied term and fills the requested result count when matching products are available. It also checks catalog pages if the first search response is incomplete.
 
-### Can I export Antonioli.eu product data to CSV or Excel?
+### What happens if I supply both a URL and a keyword?
+
+The URL wins. Clear the URL field if you want to use the keyword.
+
+### Can I export the data to CSV or Excel?
 
 Yes. Apify datasets can be downloaded as CSV, Excel, JSON, XML, and other supported formats.
 
 ### Why is a field missing from one product?
 
-Fields depend on the information published for that item. A product may not have a sale price, image set, variant inventory, or another optional value. Empty values are omitted from the record.
+Fields depend on what Antonioli.eu publishes for that item. A product may not have a sale price, multiple images, or variant inventory. Empty values are omitted from the record.
+
+### Why is product availability sometimes missing?
+
+Availability depends on what Antonioli.eu publishes for that item. When it is available, the Actor merges it into the product record. If it is not published, the field is left out instead of guessed.
+
+### Do I need a proxy?
+
+Apify Proxy is enabled by default with Italian residential IPs, which gave the fewest retries in testing. You can change the proxy country or supply a custom proxy if your workflow needs another location. Blocked sessions rotate automatically on retries.
 
 ### Can I run this Actor on a schedule?
 
-Yes. Use Apify schedules to collect repeat snapshots for product availability, price monitoring, or catalog changes.
-
-### Why do image fields contain only URLs?
-
-The Actor returns `image`, `featured_image`, and `images` as direct image URLs. This keeps the dataset compact and makes image export, download, and downstream processing simpler.
+Yes. Use an Apify schedule to collect repeat snapshots for new arrivals, price changes, or inventory monitoring.
 
 ### Is collecting Antonioli.eu data legal?
 
-You are responsible for following Antonioli.eu terms, applicable laws, intellectual property rules, privacy requirements, and any restrictions on how collected data is used.
+You are responsible for following Antonioli.eu terms, applicable laws, intellectual property rules, privacy requirements, and any restrictions on how the collected data is used.
 
 ## Related Actors
 
-- [Clutch.co Scraper](https://apify.com/shahidirfan/Clutch-co-Scraper) - Collect company and agency data for supplier and competitor research that can complement fashion market analysis.
-- [Epicurious Recipes Scraper](https://apify.com/shahidirfan/Epicurious-Scraper) - Build structured category datasets for content and catalog research workflows.
+- [Zara Product Scraper](https://apify.com/shahidirfan/zara-product-scraper) - Collect fashion product, price, color, and category data from Zara.
+- [Forever21 Product Scraper](https://apify.com/shahidirfan/forever21-product-scraper) - Collect apparel products, prices, variants, and stock data from Forever21.
+- [Reebok Products Scraper](https://apify.com/shahidirfan/reebok-products-scraper) - Collect footwear and apparel catalog data from Reebok.
 
 ## Support
 
@@ -218,4 +238,4 @@ For issues or feature requests, use the Issues tab on the Actor page and include
 
 ## Legal Notice
 
-This Actor is intended for responsible collection of publicly available product information. Users are responsible for complying with Antonioli.eu terms, applicable laws, and any restrictions that apply to storing, analyzing, or redistributing collected data.
+This Actor is intended for responsible collection of publicly available product information. Users are responsible for complying with Antonioli.eu terms, applicable laws, and any restrictions that apply to storing, analyzing, or redistributing the collected data.

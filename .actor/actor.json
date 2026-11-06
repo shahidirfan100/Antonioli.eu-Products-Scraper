@@ -1,6 +1,6 @@
 {
     "actorSpecification": 1,
-    "name": "antonioli-products-scraper",
+    "name": "antonioli-eu-products-scraper",
     "version": "1.0",
     "buildTag": "latest",
     "minMemoryMbytes": 512,

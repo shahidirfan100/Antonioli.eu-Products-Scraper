@@ -1,11 +1,11 @@
 {
-    "name": "antonioli-products-scraper",
+    "name": "antonioli-eu-products-scraper",
     "version": "1.0.0",
-    "description": "API-based Antonioli.eu products scraper for collections, product pages, catalog searches, and keyword searches.",
+    "description": "Collect product data from Antonioli.eu collections, product pages, search pages, and keyword searches.",
     "type": "module",
     "dependencies": {
         "apify": "^3.7.2",
-        "impit": "^0.14.3"
+        "impit": "^0.14.8"
     },
     "devDependencies": {
         "@apify/eslint-config": "^2.0.0",
